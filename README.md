@@ -39,10 +39,10 @@ import clr
 from System.Reflection import Assembly
 import sys
 sys.path.append(r"C:/Program Files (x86)/Microsoft SQL Server/140/Tools/Binn/ManagementStudio")
-clr.AddReference(r"C:\\Program Files (x86)\\Microsoft SQL Server\\140\\Tools\\Binn\\ManagementStudio\\Microsoft.SqlServer.XEvent.Linq.dll")
+# clr.AddReference(r"C:\\Program Files (x86)\\Microsoft SQL Server\\140\\Tools\\Binn\\ManagementStudio\\Microsoft.SqlServer.XEvent.Linq.dll")
 from Microsoft.SqlServer.XEvent.Linq import QueryableXEventData
 events = QueryableXEventData("C:\\Users\\Рома\\AppData\\Local\\Temp\\18_*.xel")
-mm = {x.Name:{f.Name: f.Value for f in x.Fields} for x in events}
+mm = [{'Fields': {f.Name: f.Value.ToString() if not type(f.Value) in [int,bool,float,str] else f.Value for f in x.Fields}, 'Actions': {f.Name: f.Value for f in x.Actions}} for x in events]
 import pprint
 pprint.pprint(mm)
 ```
